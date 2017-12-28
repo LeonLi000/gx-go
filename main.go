@@ -59,7 +59,7 @@ func LoadPackageFile(name string) (*Package, error) {
 func main() {
 	app := cli.NewApp()
 	app.Name = "gx-go"
-	app.Author = "whyrusleeping"
+	app.Author = "Leon"
 	app.Usage = "gx extensions for golang"
 	app.Version = "1.4.0"
 	app.Flags = []cli.Flag{
@@ -119,6 +119,33 @@ var DepMapCommand = cli.Command{
 			return err
 		}
 
+		f, err := os.Create("test.txt")
+		if err != nil {
+			fmt.Printf("create map file error: %v\n", err)
+			return err
+		}
+		defer f.Close()
+
+		w := bufio.NewWriter(f)
+
+		for k, v := range m {
+			if v == "0.0.0" {
+				lineStr := fmt.Sprintf(`
+					[[constraint]]
+					branch = "master"
+					name = %s
+					`, v)
+				fmt.Fprintln(w, lineStr)
+			} else {
+				lineStr := fmt.Sprintf(`
+					[[constraint]]
+					name = %s
+					version = %s
+					`, k, v)
+				fmt.Fprintln(w, lineStr)
+			}
+		}
+		w.Flush()
 		out, err := json.MarshalIndent(m, "", "  ")
 		if err != nil {
 			return err
