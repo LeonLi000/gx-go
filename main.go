@@ -126,8 +126,7 @@ var DepMapCommand = cli.Command{
 		}
 		defer f.Close()
 
-		w := bufio.NewWriter(f)
-
+		data := []string{}
 		for k, v := range m {
 			if v == "0.0.0" {
 				lineStr := fmt.Sprintf(`
@@ -135,18 +134,17 @@ var DepMapCommand = cli.Command{
 					branch = "master"
 					name = %s
 					`, v)
-				fmt.Fprintln(w, lineStr)
+				data = append(data, lineStr)
 			} else {
 				lineStr := fmt.Sprintf(`
 					[[constraint]]
 					name = %s
 					version = %s
 					`, k, v)
-				fmt.Fprintln(w, lineStr)
+				data = append(data, lineStr)
 			}
 		}
-		w.Flush()
-		out, err := json.MarshalIndent(m, "", "  ")
+		out, err := json.MarshalIndent(data, "", "  ")
 		if err != nil {
 			return err
 		}
