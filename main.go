@@ -145,7 +145,7 @@ var DepMapCommand = cli.Command{
 			log.Fatal(err)
 		}
 
-		out, err := json.MarshalIndent(data, "", "  ")
+		out, err := json.MarshalIndent(m, "", "  ")
 		if err != nil {
 			return err
 		}
