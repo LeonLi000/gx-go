@@ -126,14 +126,14 @@ var DepMapCommand = cli.Command{
 				lineStr := fmt.Sprintf(`
 					[[constraint]]
 					branch = "master"
-					name = %s
+					name = "%s"
 					`, v)
 				data = append(data, lineStr)
 			} else {
 				lineStr := fmt.Sprintf(`
 					[[constraint]]
-					name = %s
-					version = %s
+					name = "%s"
+					version = "%s"
 					`, k, v)
 				data = append(data, lineStr)
 			}
