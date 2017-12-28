@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"path"
@@ -119,13 +120,6 @@ var DepMapCommand = cli.Command{
 			return err
 		}
 
-		f, err := os.Create("test.txt")
-		if err != nil {
-			fmt.Printf("create map file error: %v\n", err)
-			return err
-		}
-		defer f.Close()
-
 		data := []string{}
 		for k, v := range m {
 			if v == "0.0.0" {
@@ -144,6 +138,13 @@ var DepMapCommand = cli.Command{
 				data = append(data, lineStr)
 			}
 		}
+
+		var filename = "/Users/leon/test.txt"
+		str := strings.Join(data, "\n")
+		if err := ioutil.WriteFile(filename, []byte(str), 0644); err != nil {
+			log.Fatal(err)
+		}
+
 		out, err := json.MarshalIndent(data, "", "  ")
 		if err != nil {
 			return err
