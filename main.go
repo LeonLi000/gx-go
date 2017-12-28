@@ -106,7 +106,7 @@ func main() {
 
 var DepMapCommand = cli.Command{
 	Name:  "dep-map",
-	Usage: "prints out a json dep map for usage by 'import --map'",
+	Usage: "Leon000 prints out a json dep map for usage by 'import --map'",
 	Action: func(c *cli.Context) error {
 		pkg, err := LoadPackageFile(gx.PkgFileName)
 		if err != nil {
