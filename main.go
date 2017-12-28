@@ -1050,11 +1050,11 @@ func buildMap(pkg *Package, m map[string]string) error {
 				if e != dep.Hash {
 					Log("have two dep packages with same import path: ", ch.Gx.DvcsImport)
 					Log("  - ", e)
-					Log("  - ", dep.Hash)
+					Log("  - ", dep.Version)
 				}
 				continue
 			}
-			m[ch.Gx.DvcsImport] = dep.Hash
+			m[ch.Gx.DvcsImport] = dep.Version
 		}
 
 		err = buildMap(&ch, m)
